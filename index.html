@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Growth Timing Calculator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>Growth Timing Calculator</h1>
+        </header>
+
+        <main>
+            <div class="card input-section">
+                <h2>Parameters</h2>
+
+                <div class="input-group">
+                    <label>Current Time</label>
+                    <div class="datetime-inputs" id="current-time-inputs">
+                        <input type="number" id="curr-year" placeholder="YYYY" min="2020" max="2100">
+                        <span>/</span>
+                        <input type="number" id="curr-month" placeholder="MM" min="1" max="12">
+                        <span>/</span>
+                        <input type="number" id="curr-day" placeholder="DD" min="1" max="31">
+                        <!-- Date Picker Trigger -->
+                        <div class="picker-wrapper">
+                            <input type="date" id="curr-date-picker" class="date-picker-hidden" tabindex="-1">
+                            <button type="button" class="calendar-btn" aria-label="Open Calendar">📅</button>
+                        </div>
+
+                        <span class="spacer"></span>
+                        <input type="number" id="curr-hour" placeholder="HH" min="0" max="23">
+                        <span>:</span>
+                        <input type="number" id="curr-min" placeholder="MM" min="0" max="59">
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label>Contest Start Time</label>
+                    <div class="datetime-inputs" id="contest-time-inputs">
+                        <input type="number" id="cont-year" placeholder="YYYY" min="2020" max="2100">
+                        <span>/</span>
+                        <input type="number" id="cont-month" placeholder="MM" min="1" max="12">
+                        <span>/</span>
+                        <input type="number" id="cont-day" placeholder="DD" min="1" max="31">
+                        <!-- Date Picker Trigger -->
+                        <div class="picker-wrapper">
+                            <input type="date" id="cont-date-picker" class="date-picker-hidden" tabindex="-1">
+                            <button type="button" class="calendar-btn" aria-label="Open Calendar">📅</button>
+                        </div>
+
+                        <span class="spacer"></span>
+                        <input type="number" id="cont-hour" placeholder="HH" min="0" max="23">
+                        <span>:</span>
+                        <input type="number" id="cont-min" placeholder="15" value="15" readonly class="readonly-input">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="input-group">
+                        <label>Time until next growth</label>
+                        <div class="time-inputs">
+                            <input type="number" id="next-hours" placeholder="0" min="0">
+                            <span>h</span>
+                            <input type="number" id="next-minutes" placeholder="0" min="0" max="59">
+                            <span>m</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="contest-timing">Growth timing during contest (0-20m)</label>
+                    <div class="range-wrapper">
+                        <input type="range" id="contest-timing" min="0" max="20" value="0">
+                        <span id="contest-timing-value">0 min</span>
+                    </div>
+                </div>
+
+                <button id="calculate-btn" class="primary-btn">Calculate Schedule</button>
+            </div>
+
+            <div class="card result-section" id="result-section" style="display: none;">
+                <h2>Optimization Plan</h2>
+                <div class="summary-stats">
+                    <div class="stat-item">
+                        <span class="stat-label">Total Growth Time</span>
+                        <span class="stat-value" id="total-time-display">--</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Target Difference</span>
+                        <span class="stat-value" id="diff-display">--</span>
+                    </div>
+                </div>
+
+                <div class="timeline-container">
+                    <h3>Schedule</h3>
+                    <ul class="timeline" id="plan-list">
+                        <!-- List items will be injected here -->
+                    </ul>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>
