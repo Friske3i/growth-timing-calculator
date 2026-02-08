@@ -32,6 +32,55 @@ body {
     max-width: 600px;
 }
 
+/* Mobile Responsiveness */
+@media (max-width: 480px) {
+    body {
+        padding: 10px;
+    }
+
+    .card {
+        padding: 16px;
+    }
+
+    .datetime-inputs {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .datetime-inputs .spacer {
+        display: none;
+        /* Hide spacer when wrapping usually implies a break */
+        width: 100%;
+        /* Force line break if needed, but flex-wrap handles natural flow */
+        height: 0;
+        margin: 0;
+    }
+
+    /* Make inputs slightly smaller on mobile to try to fit */
+    .datetime-inputs input[id$="-year"] {
+        width: 4.5rem;
+    }
+
+    .datetime-inputs input[id$="-month"],
+    .datetime-inputs input[id$="-day"],
+    .datetime-inputs input[id$="-hour"],
+    .datetime-inputs input[id$="-min"] {
+        width: 3.5rem;
+    }
+
+    /* Force break between Date and Time if they wrap? 
+       Actually, let's just let them wrap naturally or force a break 
+       between day and hour.
+    */
+    .datetime-inputs .spacer {
+        display: block;
+        width: 100%;
+        height: 1px;
+        margin-top: 4px;
+        margin-bottom: 4px;
+    }
+}
+
 header {
     text-align: center;
     margin-bottom: 2rem;
