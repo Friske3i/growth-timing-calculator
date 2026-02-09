@@ -47,7 +47,58 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     document.getElementById('calculate-btn').addEventListener('click', calculateSchedule);
+
+    setupDualSlider();
 });
+
+function setupDualSlider() {
+    const minInput = document.getElementById('unique-min');
+    const maxInput = document.getElementById('unique-max');
+    const minValDisp = document.getElementById('unique-min-val');
+    const maxValDisp = document.getElementById('unique-max-val');
+    const track = document.getElementById('unique-slider-track');
+
+    function updateTrack() {
+        const min = parseInt(minInput.value);
+        const max = parseInt(maxInput.value);
+        const total = 12;
+
+        // Visual update
+        minValDisp.textContent = min;
+        maxValDisp.textContent = max;
+
+        // Calculate percentages
+        const leftPercent = (min / total) * 100;
+        const rightPercent = (max / total) * 100;
+
+        // Update track background (gradient to show range)
+        // From 0% to leftPercent is bg
+        // From leftPercent to rightPercent is accent
+        // From rightPercent to 100% is bg
+        track.style.background = `linear-gradient(to right, var(--input-bg) ${leftPercent}%, var(--accent) ${leftPercent}%, var(--accent) ${rightPercent}%, var(--input-bg) ${rightPercent}%)`;
+    }
+
+    minInput.addEventListener('input', () => {
+        const min = parseInt(minInput.value);
+        const max = parseInt(maxInput.value);
+        if (min > max) {
+            minInput.value = max;
+        }
+        updateTrack();
+    });
+
+    maxInput.addEventListener('input', () => {
+        const min = parseInt(minInput.value);
+        const max = parseInt(maxInput.value);
+        if (max < min) {
+            maxInput.value = min;
+        }
+        updateTrack();
+    });
+
+    // Initial update
+    updateTrack();
+}
 
 function setupDatePicker(prefix) {
     const picker = document.getElementById(`${prefix}-date-picker`);
@@ -112,6 +163,8 @@ function calculateSchedule() {
     const nextHours = parseInt(document.getElementById('next-hours').value) || 0;
     const nextMinutes = parseInt(document.getElementById('next-minutes').value) || 0;
     const contestTiming = parseInt(document.getElementById('contest-timing').value) || 0;
+    const uniqueMin = parseInt(document.getElementById('unique-min').value) || 0;
+    const uniqueMax = parseInt(document.getElementById('unique-max').value) || 12;
 
     if (!currentTime || !contestStart) {
         alert("Please enter valid dates and times.");
@@ -151,12 +204,12 @@ function calculateSchedule() {
     }
 
     // Optimization: Find combination of crops that sum closest to totalTargetMinutes
-    const plan = findOptimalPlan(totalTargetMinutes);
+    const plan = findOptimalPlan(totalTargetMinutes, uniqueMin, uniqueMax);
 
     displayResults(plan, currentTime, nextGrowthMinutes);
 }
 
-function findOptimalPlan(target) {
+function findOptimalPlan(target, minId = 0, maxId = 12) {
     const maxSearch = target + 180;
     // reachable[t] = { lastCrop: id, prevTime: t_prev, count: c, idSum: s }
     const reachable = new Array(maxSearch + 1).fill(null);
@@ -169,6 +222,8 @@ function findOptimalPlan(target) {
 
         for (const [idStr, time] of Object.entries(CROP_TIMES)) {
             const id = parseInt(idStr);
+            if (id < minId || id > maxId) continue;
+
             const nextT = t + time;
 
             if (nextT > maxSearch) continue;

@@ -83,6 +83,18 @@
                     </div>
                 </div>
 
+                <div class="input-group">
+                    <label>Unique Crop Range (0-12)</label>
+                    <div class="range-slider-container">
+                        <div class="slider-track" id="unique-slider-track"></div>
+                        <input type="range" id="unique-min" min="0" max="12" value="0">
+                        <input type="range" id="unique-max" min="0" max="12" value="12">
+                    </div>
+                    <div class="range-values">
+                        <span id="unique-min-val">0</span> - <span id="unique-max-val">12</span>
+                    </div>
+                </div>
+
                 <button id="calculate-btn" class="primary-btn">Calculate Schedule</button>
             </div>
 
