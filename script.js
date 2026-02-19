@@ -8,8 +8,8 @@
    Constants & Configuration
    ========================================= */
 const BASE_GROWTH_TIME = 240;
-const BUFF_PER_UNIQUE_CROP = 0.05;
-const GARDEN_GROWTH_SPEED_BUFF = 0.2;
+const BUFF_PER_UNIQUE_CROP = 0.025;
+const GARDEN_GROWTH_SPEED_BUFF = 0.5;
 const GREENHOUSE_GROWTH_SPEED_BUFF = 0.5;
 
 /* =========================================
